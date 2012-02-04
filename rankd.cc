@@ -36,6 +36,7 @@ namespace rankd {
 
             rank++;
         } while ( node = node->next );
+        return 0;
     }
 
     Node* Manager::get_node_by_rank(unsigned long rank)
