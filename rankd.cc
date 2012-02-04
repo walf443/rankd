@@ -41,6 +41,14 @@ namespace rankd {
 
     Node* Manager::get_node_by_rank(unsigned long rank)
     {
+        unsigned long counter = 1;
+        Node* node = this->first;
+        do {
+            if ( counter == rank ) {
+                return node;
+            }
+            counter++;
+        } while ( node = node->next );
     }
 }
 
