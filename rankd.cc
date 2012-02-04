@@ -14,7 +14,11 @@ namespace rankd {
 
     Node* Manager::top(unsigned long item_id)
     {
-        this->first;
+        Node * node = new Node();
+        node->value = item_id;
+        node->next = this->first;
+        this->first = node;
+        return node;
     }
 
     unsigned long get_rank(unsigned long item_id)
