@@ -3,10 +3,9 @@
 namespace rankd {
     class Node {
     public:
-    protected:
         Node* prev;
         Node* next;
-    private:
+        unsigned long value;
     };
 
     class Manager {
@@ -14,7 +13,7 @@ namespace rankd {
         Manager();
         ~Manager();
         Node* top(unsigned long item_id);
-        Node* get_rank(unsigned long item_id);
+        unsigned long get_rank(unsigned long item_id);
         Node* get_node_by_rank(unsigned long rank);
     private:
         Node* first;
