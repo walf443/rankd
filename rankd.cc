@@ -21,6 +21,7 @@ namespace rankd {
         Node* node = new Node();
         node->value = item_id;
         node->next = this->first;
+        this->first->prev = node;
         this->first = node;
         return node;
     }
