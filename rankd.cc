@@ -43,6 +43,8 @@ namespace rankd {
     }
 }
 
+#include <iostream>
+
 int main (int argc, char **argv)
 {
     rankd::Manager* manager = new rankd::Manager();
@@ -50,7 +52,7 @@ int main (int argc, char **argv)
         manager->top(i);
     }
     for (int i = 0; i < 100; i++ ) {
-        manager->get_rank(i);
+        std::cout << i << ": " << manager->get_rank(i) << std::endl;
     }
     delete manager;
 
