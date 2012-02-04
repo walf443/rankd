@@ -9,7 +9,11 @@ namespace rankd {
 
     Manager::~Manager()
     {
-        delete this->last;
+        Node *node = this->first;
+
+        do {
+            delete node;
+        } while ( node = node->next );
     }
 
     Node* Manager::top(unsigned long item_id)
