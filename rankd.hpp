@@ -20,7 +20,10 @@ namespace rankd {
     private:
         Node* first;
         Node* last;
+        unsigned long num_of_items;
         std::map<unsigned long, Node*> item_map;
+        std::map<unsigned long, Node*> rank_map;
+        void update_rank_map(Node* node);
     };
 }
 

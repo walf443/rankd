@@ -22,11 +22,13 @@ namespace rankd {
         std::map<long unsigned, Node*>::iterator iter = this->item_map.find(item_id);
         if ( iter == this->item_map.end() ) {
             Node* node = new Node();
+            this->num_of_items++;
             node->value = item_id;
             node->next = this->first;
             this->first->prev = node;
             this->first = node;
             this->item_map.insert( std::make_pair(item_id, node) );
+            this->update_rank_map(node);
             return node;
         } else {
             Node *node, *prev, *next;
@@ -40,8 +42,25 @@ namespace rankd {
             node->prev = NULL;
             node->next = this->first;
             this->first->prev = node;
+            this->update_rank_map(node);
 
             return node;
+        }
+    }
+
+    void Manager::update_rank_map(Node* node)
+    {
+        unsigned long n = 1;
+        while ( n <= this->num_of_items ) {
+            std::map<unsigned long, Node*>::iterator iter = this->rank_map.find(n);
+            if ( iter == this->rank_map.end() ) {
+            } else {
+                // topから呼ばれているのを想定している
+                //
+                // データをひとつズラす
+                this->rank_map.insert(std::make_pair(n, iter->second->prev));
+            }
+            n *= 2;
         }
     }
 
@@ -87,3 +106,4 @@ int main (int argc, char **argv)
 
     return 0;
 }
+
