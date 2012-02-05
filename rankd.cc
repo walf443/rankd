@@ -19,13 +19,30 @@ namespace rankd {
 
     Node* Manager::top(unsigned long item_id)
     {
-        Node* node = new Node();
-        node->value = item_id;
-        node->next = this->first;
-        this->first->prev = node;
-        this->first = node;
-        this->item_map.insert( std::make_pair(item_id, node) );
-        return node;
+        std::map<long unsigned, Node*>::iterator iter = this->item_map.find(item_id);
+        if ( iter == this->item_map.end() ) {
+            Node* node = new Node();
+            node->value = item_id;
+            node->next = this->first;
+            this->first->prev = node;
+            this->first = node;
+            this->item_map.insert( std::make_pair(item_id, node) );
+            return node;
+        } else {
+            Node *node, *prev, *next;
+            node = iter->second;
+            prev = node->prev;
+            next = node->next;
+            
+            prev->next = next;
+            next->prev = prev;
+
+            node->prev = NULL;
+            node->next = this->first;
+            this->first->prev = node;
+
+            return node;
+        }
     }
 
     unsigned long Manager::get_rank(unsigned long item_id)
