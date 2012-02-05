@@ -1,5 +1,7 @@
 #ifndef RANKD_H
 
+#include <map>
+
 namespace rankd {
     class Node {
     public:
@@ -18,6 +20,7 @@ namespace rankd {
     private:
         Node* first;
         Node* last;
+        std::map<unsigned long, Node*> item_map;
     };
 }
 

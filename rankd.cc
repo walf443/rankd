@@ -1,4 +1,5 @@
 #include "rankd.hpp"
+#include <iostream>
 
 namespace rankd {
     Manager::Manager()
@@ -23,6 +24,7 @@ namespace rankd {
         node->next = this->first;
         this->first->prev = node;
         this->first = node;
+        this->item_map.insert( std::make_pair(item_id, node) );
         return node;
     }
 
