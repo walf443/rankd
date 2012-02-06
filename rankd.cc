@@ -106,7 +106,7 @@ namespace rankd {
 int main (int argc, char **argv)
 {
     rankd::Manager* manager = new rankd::Manager();
-    for (int i = 0; i < 10000000; i++ ) {
+    for (int i = 0; i < 1000000; i++ ) {
         manager->top(i);
     }
     for (int i = 0; i < 100; i++ ) {
