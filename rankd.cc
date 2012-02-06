@@ -50,10 +50,20 @@ namespace rankd {
 
     void Manager::update_rank_map(Node* node)
     {
+        Node* nd = this->first;
+        unsigned long rank = 1;
         unsigned long n = 1;
-        while ( n <= this->num_of_items ) {
+        while ( n < this->num_of_items ) {
             std::map<unsigned long, Node*>::iterator iter = this->rank_map.find(n);
             if ( iter == this->rank_map.end() ) {
+                do {
+                    if ( n == rank ) {
+                        break;
+                    }
+
+                    rank++;
+                } while ( nd = nd->next );
+                this->rank_map.insert(std::make_pair(n, nd));
             } else {
                 // topから呼ばれているのを想定している
                 //
