@@ -27,7 +27,7 @@ namespace rankd {
             node->next = this->first;
             this->first->prev = node;
             this->first = node;
-            this->item_map.insert( std::make_pair(item_id, node) );
+            this->item_map[item_id] = node;
             this->update_rank_map(node);
             return node;
         } else {
@@ -85,7 +85,7 @@ namespace rankd {
         std::map<Node*, unsigned long> reverse_rank_map;
         std::map<unsigned long, Node*>::iterator iter = this->rank_map.begin();
         while ( iter != this->rank_map.end() ) {
-            reverse_rank_map.insert(std::make_pair(iter->second, iter->first));
+            reverse_rank_map[iter->second] = iter->first;
 
             iter++;
         }
