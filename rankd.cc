@@ -54,34 +54,30 @@ namespace rankd {
         Node* nd = this->first;
         unsigned long rank = 1;
         unsigned long n = 1;
-        while ( n < this->num_of_items ) {
+
+        while ( n <= this->num_of_items ) {
             std::map<unsigned long, Node*>::iterator iter = this->rank_map.find(n);
-            // if ( iter == this->rank_map.end() ) {
+            if ( iter != this->rank_map.end() ) {
+                // topから呼ばれているのを想定している
+                //
+                // データをひとつズラす
+                Node* nd = (Node *)iter->second->prev;
+                this->rank_map[n] = nd;
+            } else {
                 // rank_mapにデータがない場合なので、基本的にはそれ以上上位のランキングは存在するはずなので、
                 // 最も近いデータから順番にたどる
                 do {
                     if ( n == rank ) {
-                        std::cout << "updated_rank_map rank: " << n << std::endl;
-                        std::cout << "updated_rank_map nd: " << nd << std::endl;
-                        std::cout << "updated_rank_map item_id: " << nd->value << std::endl;
                         break;
                     }
 
                     rank++;
                 } while ( nd = nd->next );
-                this->rank_map.insert(std::make_pair(n, nd));
-            // } else {
-            //     // topから呼ばれているのを想定している
-            //     //
-            //     // データをひとつズラす
-            //     std::cout << "updated_rank_map already rank: " << n << std::endl;
-            //     Node* nd = (Node *)iter->second->prev;
-            //     std::cout << "updated_rank_map already nd: " << nd << std::endl;
-            //     std::cout << "updated_rank_map already item_id: " << nd->value << std::endl;
-            //     this->rank_map.insert(std::make_pair(n, iter->second->prev));
-            // }
+                this->rank_map[n] = nd;
+            }
             n *= 2;
         }
+
     }
 
     unsigned long Manager::get_rank(unsigned long item_id)
@@ -138,7 +134,7 @@ int main (int argc, char **argv)
         manager->top(i);
     }
     for (int i = 0; i < 100; i++ ) {
-        // std::cout << i << ": " << manager->get_rank(i) << std::endl;
+        std::cout << i << ": " << manager->get_rank(i) << std::endl;
     }
 
     delete manager;
