@@ -82,14 +82,6 @@ namespace rankd {
 
     unsigned long Manager::get_rank(unsigned long item_id)
     {
-        std::map<Node*, unsigned long> reverse_rank_map;
-        std::map<unsigned long, Node*>::iterator iter = this->rank_map.begin();
-        while ( iter != this->rank_map.end() ) {
-            reverse_rank_map[iter->second] = iter->first;
-
-            iter++;
-        }
-
         Node* node;
         std::map<unsigned long, Node*>::iterator item_iter = this->item_map.find(item_id);
 
@@ -100,6 +92,14 @@ namespace rankd {
 
         if ( node == this->first ) {
             return 1;
+        }
+
+        std::map<Node*, unsigned long> reverse_rank_map;
+        std::map<unsigned long, Node*>::iterator iter = this->rank_map.begin();
+        while ( iter != this->rank_map.end() ) {
+            reverse_rank_map[iter->second] = iter->first;
+
+            iter++;
         }
 
         unsigned long counter = 0;
