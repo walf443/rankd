@@ -92,6 +92,9 @@ namespace rankd {
 
         if ( node == this->first ) {
             return 1;
+        } else if ( this->num_of_items && node == this->last->prev ) {
+            // 番兵がいるため、最後のひとつ前をチェック
+            return this->num_of_items;
         }
 
         std::map<Node*, unsigned long> reverse_rank_map;
