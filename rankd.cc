@@ -92,10 +92,15 @@ namespace rankd {
 
         Node* node;
         std::map<unsigned long, Node*>::iterator item_iter = this->item_map.find(item_id);
+
         if ( item_iter == this->item_map.end() ) {
             return 0;
         }
         node = item_iter->second;
+
+        if ( node == this->first ) {
+            return 1;
+        }
 
         unsigned long counter = 0;
         do {
