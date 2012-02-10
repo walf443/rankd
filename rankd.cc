@@ -130,7 +130,7 @@ namespace rankd {
 
 #include <iostream>
 
-#define NUM 1000
+#define NUM 10000
 
 int main (int argc, char **argv)
 {
@@ -138,7 +138,7 @@ int main (int argc, char **argv)
     for (int i = 0; i < NUM; i++ ) {
         manager->top(i);
     }
-    for (int i = 0; i < 100; i++ ) {
+    for (int i = 0; i < 10000; i++ ) {
         std::cout << i << ": " << manager->get_rank(i) << std::endl;
     }
 
