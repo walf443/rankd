@@ -1,20 +1,33 @@
 #include "rankd.hpp"
 
 #include <iostream>
+using namespace rankd;
 
-#define NUM 10000
+int bench_get_rank (unsigned long num)
+{
+    std::cout << "num: " << num << std::endl;
+    return 0;
+}
+
+int dispatch (char* subcmd, int argc, char **argv)
+{
+    std::cout << subcmd << std::endl;
+
+    if ( strcmp(subcmd, "get_rank") == 0 ) {
+        return bench_get_rank(atol(argv[2]));
+    }
+
+    return 0;
+}
 
 int main (int argc, char **argv)
 {
-    rankd::Manager* manager = new rankd::Manager();
-    for (int i = 0; i < NUM; i++ ) {
-        manager->top(i);
-    }
-    for (int i = 0; i < 10000; i++ ) {
-        std::cout << i << ": " << manager->get_rank(i) << std::endl;
-    }
 
-    delete manager;
+    if ( argc <= 1 ) {
+        std::cout << "Usage: " << argv[0] << " subcommand [args, ....]" << std::endl;
+        exit(1);
+    }
+    return dispatch(argv[1], argc, argv);
 
     return 0;
 }
