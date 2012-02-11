@@ -120,6 +120,16 @@ namespace rankd {
 
     Node* Manager::get_node_by_rank(unsigned long rank)
     {
+        if ( rank == 1 ) {
+            return this->first;
+        } else if ( rank > this->num_of_items ) {
+            return NULL;
+        } else if ( rank == this->num_of_items ) {
+            if ( this->num_of_items >= 2 ) {
+                return this->last->prev;
+            }
+        }
+
         std::map<unsigned long, Node*>::iterator iter = this->rank_map.find(rank);
         if ( iter != this->rank_map.end() ) {
             return iter->second;
