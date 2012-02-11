@@ -10,6 +10,18 @@ int bench_get_rank (int argc, char **argv)
         return 1;
     }
 
+    unsigned long num = atol(argv[2]);
+    Manager* manager = new Manager();
+
+    for (unsigned long i = 1; i <= num; i++ ) {
+        manager->top(i);
+    }
+    for (unsigned long i = 1; i <= num; i++ ) {
+        manager->get_rank(i);
+    }
+
+    delete manager;
+
     return 0;
 }
 
