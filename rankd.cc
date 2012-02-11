@@ -120,14 +120,31 @@ namespace rankd {
 
     Node* Manager::get_node_by_rank(unsigned long rank)
     {
-        unsigned long counter = 1;
-        Node* node = this->first;
-        do {
-            if ( counter == rank ) {
-                return node;
+        std::map<unsigned long, Node*>::iterator iter = this->rank_map.find(rank);
+        if ( iter != this->rank_map.end() ) {
+            return iter->second;
+        }
+
+        iter = this->rank_map.begin();
+        unsigned long prev_indexed_rank = 0;
+        while ( iter != this->rank_map.end() ) {
+            if ( prev_indexed_rank < rank && rank <= iter->first ) {
+                unsigned long counter = iter->first;
+                Node *node = iter->second;
+                do {
+                    if ( counter == rank ) {
+                        return node;
+                    }
+                    
+                    counter--;
+                } while ( node = node->prev );
+                while ( counter == rank ) {
+                }
             }
-            counter++;
-        } while ( node = node->next );
+
+            prev_indexed_rank = iter->first;
+            iter++;
+        }
     }
 }
 
