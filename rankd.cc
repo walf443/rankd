@@ -19,7 +19,7 @@ namespace rankd {
 
     Node* Manager::top(unsigned long item_id)
     {
-        std::map<long unsigned, Node*>::iterator iter = this->item_map.find(item_id);
+        RD_Map<long unsigned, Node*>::iterator iter = this->item_map.find(item_id);
         if ( iter == this->item_map.end() ) {
             Node* node = new Node();
             this->num_of_items++;
@@ -56,7 +56,7 @@ namespace rankd {
         unsigned long n = 1;
 
         while ( n <= this->num_of_items ) {
-            std::map<unsigned long, Node*>::iterator iter = this->rank_map.find(n);
+            RD_Map<unsigned long, Node*>::iterator iter = this->rank_map.find(n);
             if ( iter != this->rank_map.end() ) {
                 // topから呼ばれているのを想定している
                 //
@@ -83,7 +83,7 @@ namespace rankd {
     unsigned long Manager::get_rank(unsigned long item_id)
     {
         Node* node;
-        std::map<unsigned long, Node*>::iterator item_iter = this->item_map.find(item_id);
+        RD_Map<unsigned long, Node*>::iterator item_iter = this->item_map.find(item_id);
 
         if ( item_iter == this->item_map.end() ) {
             return 0;
@@ -97,8 +97,8 @@ namespace rankd {
             return this->num_of_items;
         }
 
-        std::map<Node*, unsigned long> reverse_rank_map;
-        std::map<unsigned long, Node*>::iterator iter = this->rank_map.begin();
+        RD_Map<Node*, unsigned long> reverse_rank_map;
+        RD_Map<unsigned long, Node*>::iterator iter = this->rank_map.begin();
         while ( iter != this->rank_map.end() ) {
             reverse_rank_map[iter->second] = iter->first;
 
@@ -107,7 +107,7 @@ namespace rankd {
 
         unsigned long counter = 0;
         do {
-            std::map<Node*, unsigned long>::iterator rank_iter = reverse_rank_map.find(node);
+            RD_Map<Node*, unsigned long>::iterator rank_iter = reverse_rank_map.find(node);
             if ( rank_iter != reverse_rank_map.end() ) {
                 return rank_iter->second + counter;
             }
@@ -130,7 +130,7 @@ namespace rankd {
             }
         }
 
-        std::map<unsigned long, Node*>::iterator iter = this->rank_map.find(rank);
+        RD_Map<unsigned long, Node*>::iterator iter = this->rank_map.find(rank);
         if ( iter != this->rank_map.end() ) {
             return iter->second;
         }

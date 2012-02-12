@@ -3,6 +3,7 @@
 #include <map>
 
 namespace rankd {
+    #define RD_Map std::map
     class Node {
     public:
         Node* prev;
@@ -21,8 +22,8 @@ namespace rankd {
         Node* first;
         Node* last;
         unsigned long num_of_items;
-        std::map<unsigned long, Node*> item_map;
-        std::map<unsigned long, Node*> rank_map;
+        RD_Map<unsigned long, Node*> item_map;
+        RD_Map<unsigned long, Node*> rank_map;
         void update_rank_map(Node* node);
     };
 }
