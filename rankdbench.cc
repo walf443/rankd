@@ -1,6 +1,8 @@
 #include "rankd.hpp"
 
 #include <iostream>
+#include <sys/time.h>
+
 using namespace rankd;
 
 int bench_get_rank (int argc, char **argv)
@@ -16,9 +18,17 @@ int bench_get_rank (int argc, char **argv)
     for (unsigned long i = 1; i <= num; i++ ) {
         manager->top(i);
     }
+    struct timeval before_timeval;
+    gettimeofday(&before_timeval, NULL);
     for (unsigned long i = 1; i <= num; i++ ) {
         manager->get_rank(i);
     }
+    struct timeval after_timeval;
+    gettimeofday(&after_timeval, NULL);
+    unsigned long runtime = ( after_timeval.tv_sec * 1000 + after_timeval.tv_usec / 1000 ) - ( before_timeval.tv_sec * 1000 + before_timeval.tv_usec / 1000 );
+    std::cout << "num:\t\t" << num << std::endl;
+    std::cout << "finished:\t" << runtime << "ms" << std::endl;
+    std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
 
     delete manager;
 
