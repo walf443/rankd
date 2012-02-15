@@ -35,25 +35,32 @@ int bench_get_rank (int argc, char **argv)
     return 0;
 }
 
-void help_commands(void)
-{
-}
-
-int do_help_commands(int argc, char** argv)
-{
-    help_commands();
-    return 0;
-}
-
 typedef struct {
         const char *name;
             int (*func)(int argc, char** argv);
 } ACTION_TABLE;
 
+int do_help_commands(int argc, char** argv);
+
 static const ACTION_TABLE ACTIONS[] = {
     { "get_rank", bench_get_rank },
     { "help", do_help_commands },
 };
+
+void help_commands(char* program_name)
+{
+    std::cout << "USAGE: " << program_name << " [commands] [arg1, arg2, ...]" << std::endl;
+    std::cout << std::endl;
+    for (unsigned long i = 0; i < (sizeof(ACTIONS)/sizeof(ACTIONS[0])); i++ ) {
+        std::cout << ACTIONS[i].name << std::endl;
+    }
+}
+
+int do_help_commands(int argc, char** argv)
+{
+    help_commands(argv[0]);
+    return 0;
+}
 
 int dispatch (char* subcmd, int argc, char **argv)
 {
@@ -62,7 +69,7 @@ int dispatch (char* subcmd, int argc, char **argv)
             return (* ACTIONS[i].func)(argc, argv);
         }
     }
-    help_commands();
+    help_commands(argv[0]);
     return 1;
 }
 
@@ -70,8 +77,8 @@ int main (int argc, char **argv)
 {
 
     if ( argc <= 1 ) {
-        std::cout << "Usage: " << argv[0] << " subcommand [args, ....]" << std::endl;
-        exit(1);
+        help_commands(argv[0]);
+        return 1;
     }
     return dispatch(argv[1], argc, argv);
 }
