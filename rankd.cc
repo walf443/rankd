@@ -109,7 +109,7 @@ namespace rankd {
         do {
             RD_Map<Node*, unsigned long>::iterator rank_iter = reverse_rank_map.find(node);
             if ( rank_iter != reverse_rank_map.end() ) {
-                return rank_iter->second + counter;
+                return rank_iter->second - counter;
             }
 
             counter++;
