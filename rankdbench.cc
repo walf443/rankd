@@ -35,10 +35,21 @@ int bench_get_rank (int argc, char **argv)
     return 0;
 }
 
+typedef struct {
+        const char *name;
+            int (*func)(int argc, char** argv);
+} ACTION_TABLE;
+
+static const ACTION_TABLE ACTIONS[] = {
+    { "get_rank", bench_get_rank },
+};
+
 int dispatch (char* subcmd, int argc, char **argv)
 {
-    if ( strcmp(subcmd, "get_rank") == 0 ) {
-        return bench_get_rank(argc, argv);
+    for (unsigned long i = 0; i < (sizeof(ACTIONS)/sizeof(ACTIONS[0])); i++ ) {
+        if ( strcmp(subcmd, ACTIONS[i].name) == 0 ) {
+            return (* ACTIONS[i].func)(argc, argv);
+        }
     }
     return 1;
 }
