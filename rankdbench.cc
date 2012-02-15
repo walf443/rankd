@@ -35,6 +35,16 @@ int bench_get_rank (int argc, char **argv)
     return 0;
 }
 
+void help_commands(void)
+{
+}
+
+int do_help_commands(int argc, char** argv)
+{
+    help_commands();
+    return 0;
+}
+
 typedef struct {
         const char *name;
             int (*func)(int argc, char** argv);
@@ -42,6 +52,7 @@ typedef struct {
 
 static const ACTION_TABLE ACTIONS[] = {
     { "get_rank", bench_get_rank },
+    { "help", do_help_commands },
 };
 
 int dispatch (char* subcmd, int argc, char **argv)
@@ -51,6 +62,7 @@ int dispatch (char* subcmd, int argc, char **argv)
             return (* ACTIONS[i].func)(argc, argv);
         }
     }
+    help_commands();
     return 1;
 }
 
