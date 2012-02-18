@@ -5,6 +5,31 @@
 
 using namespace rankd;
 
+namespace rankd {
+    class Timer {
+    public:
+        void start();
+        void stop();
+        unsigned long get_result();
+    private:
+        struct timeval start_timeval;
+        struct timeval end_timeval;
+    };
+
+    void Timer::stop()
+    {
+        gettimeofday(&end_timeval, NULL);
+    }
+    void Timer::start()
+    {
+        gettimeofday(&start_timeval, NULL);
+    }
+    unsigned long Timer::get_result()
+    {
+        return ( end_timeval.tv_sec * 1000 + end_timeval.tv_usec / 1000 ) - ( start_timeval.tv_sec * 1000 + start_timeval.tv_usec / 1000 );
+    }
+}
+
 rankd::Manager* prepare(unsigned long num)
 {
     rankd::Manager *manager = new Manager();
@@ -24,18 +49,18 @@ int bench_get_rank (int argc, char **argv)
     unsigned long num = atol(argv[2]);
     Manager* manager = prepare(num);
 
-    struct timeval before_timeval;
-    gettimeofday(&before_timeval, NULL);
+    Timer *timer = new Timer;
+    timer->start();
     for (unsigned long i = 1; i <= num; i++ ) {
         manager->get_rank(i);
     }
-    struct timeval after_timeval;
-    gettimeofday(&after_timeval, NULL);
-    unsigned long runtime = ( after_timeval.tv_sec * 1000 + after_timeval.tv_usec / 1000 ) - ( before_timeval.tv_sec * 1000 + before_timeval.tv_usec / 1000 );
+    timer->stop();
+    unsigned long runtime = timer->get_result();
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
 
+    delete timer;
     delete manager;
 
     return 0;
@@ -51,8 +76,8 @@ int bench_get_rank_best(int argc, char **argv)
     unsigned long num = atol(argv[2]);
     Manager* manager = prepare(num);
 
-    struct timeval before_timeval;
-    gettimeofday(&before_timeval, NULL);
+    Timer *timer = new Timer;
+    timer->start();
     unsigned long n = 1;
     while ( n < num ) {
         n *= 2;
@@ -60,13 +85,13 @@ int bench_get_rank_best(int argc, char **argv)
     for (unsigned long i = 1; i <= num; i++ ) {
         manager->get_rank(n/2);
     }
-    struct timeval after_timeval;
-    gettimeofday(&after_timeval, NULL);
-    unsigned long runtime = ( after_timeval.tv_sec * 1000 + after_timeval.tv_usec / 1000 ) - ( before_timeval.tv_sec * 1000 + before_timeval.tv_usec / 1000 );
+    timer->stop();
+    unsigned long runtime = timer->get_result();
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
 
+    delete timer;
     delete manager;
 
     return 0;
@@ -83,8 +108,8 @@ int bench_get_rank_worst(int argc, char **argv)
     unsigned long num = atol(argv[2]);
     Manager* manager = prepare(num);
 
-    struct timeval before_timeval;
-    gettimeofday(&before_timeval, NULL);
+    Timer *timer = new Timer;
+    timer->start();
     unsigned long n = 1;
     while ( n < num ) {
         n *= 2;
@@ -93,13 +118,13 @@ int bench_get_rank_worst(int argc, char **argv)
     for (unsigned long i = 1; i <= num; i++ ) {
         manager->get_rank(n/2-1);
     }
-    struct timeval after_timeval;
-    gettimeofday(&after_timeval, NULL);
-    unsigned long runtime = ( after_timeval.tv_sec * 1000 + after_timeval.tv_usec / 1000 ) - ( before_timeval.tv_sec * 1000 + before_timeval.tv_usec / 1000 );
+    timer->stop();
+    unsigned long runtime = timer->get_result();
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
 
+    delete timer;
     delete manager;
 
     return 0;
