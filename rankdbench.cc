@@ -5,6 +5,15 @@
 
 using namespace rankd;
 
+rankd::Manager* prepare(unsigned long num)
+{
+    rankd::Manager *manager = new Manager();
+    for (unsigned long i = 1; i <= num; i++ ) {
+        manager->top(i);
+    }
+    return manager;
+}
+
 int bench_get_rank (int argc, char **argv)
 {
     if ( argc < 3 ) {
@@ -13,11 +22,8 @@ int bench_get_rank (int argc, char **argv)
     }
 
     unsigned long num = atol(argv[2]);
-    Manager* manager = new Manager();
+    Manager* manager = prepare(num);
 
-    for (unsigned long i = 1; i <= num; i++ ) {
-        manager->top(i);
-    }
     struct timeval before_timeval;
     gettimeofday(&before_timeval, NULL);
     for (unsigned long i = 1; i <= num; i++ ) {
@@ -43,11 +49,8 @@ int bench_get_rank_best(int argc, char **argv)
     }
 
     unsigned long num = atol(argv[2]);
-    Manager* manager = new Manager();
+    Manager* manager = prepare(num);
 
-    for (unsigned long i = 1; i <= num; i++ ) {
-        manager->top(i);
-    }
     struct timeval before_timeval;
     gettimeofday(&before_timeval, NULL);
     unsigned long n = 1;
@@ -78,11 +81,8 @@ int bench_get_rank_worst(int argc, char **argv)
     }
 
     unsigned long num = atol(argv[2]);
-    Manager* manager = new Manager();
+    Manager* manager = prepare(num);
 
-    for (unsigned long i = 1; i <= num; i++ ) {
-        manager->top(i);
-    }
     struct timeval before_timeval;
     gettimeofday(&before_timeval, NULL);
     unsigned long n = 1;
