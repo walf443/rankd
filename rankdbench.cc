@@ -66,6 +66,87 @@ int bench_get_rank (int argc, char **argv)
     return 0;
 }
 
+int bench_get_rank_top(int argc, char **argv)
+{
+    if ( argc < 3 ) {
+        std::cout << "USAGE: " << argv[0] << " " << argv[1] << " num" << std::endl;
+        return 1;
+    }
+
+    unsigned long num = atol(argv[2]);
+    Manager* manager = prepare(num);
+
+    Timer *timer = new Timer;
+    timer->start();
+    for (unsigned long i = 1; i <= num; i++ ) {
+        manager->get_rank(1);
+    }
+    timer->stop();
+    unsigned long runtime = timer->get_result();
+    std::cout << "num:\t\t" << num << std::endl;
+    std::cout << "finished:\t" << runtime << "ms" << std::endl;
+    std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+
+    delete timer;
+    delete manager;
+
+    return 0;
+};
+
+int bench_get_rank_last(int argc, char **argv)
+{
+    if ( argc < 3 ) {
+        std::cout << "USAGE: " << argv[0] << " " << argv[1] << " num" << std::endl;
+        return 1;
+    }
+
+    unsigned long num = atol(argv[2]);
+    Manager* manager = prepare(num);
+
+    Timer *timer = new Timer;
+    timer->start();
+    for (unsigned long i = 1; i <= num; i++ ) {
+        manager->get_rank(num);
+    }
+    timer->stop();
+    unsigned long runtime = timer->get_result();
+    std::cout << "num:\t\t" << num << std::endl;
+    std::cout << "finished:\t" << runtime << "ms" << std::endl;
+    std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+
+    delete timer;
+    delete manager;
+
+    return 0;
+};
+
+int bench_get_rank_not_found(int argc, char **argv)
+{
+    if ( argc < 3 ) {
+        std::cout << "USAGE: " << argv[0] << " " << argv[1] << " num" << std::endl;
+        return 1;
+    }
+
+    unsigned long num = atol(argv[2]);
+    Manager* manager = prepare(num);
+
+    Timer *timer = new Timer;
+    timer->start();
+    for (unsigned long i = 1; i <= num; i++ ) {
+        manager->get_rank(num+1);
+    }
+    timer->stop();
+    unsigned long runtime = timer->get_result();
+    std::cout << "num:\t\t" << num << std::endl;
+    std::cout << "finished:\t" << runtime << "ms" << std::endl;
+    std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+
+    delete timer;
+    delete manager;
+
+    return 0;
+};
+
 int bench_get_rank_best(int argc, char **argv)
 {
     if ( argc < 3 ) {
@@ -96,7 +177,6 @@ int bench_get_rank_best(int argc, char **argv)
 
     return 0;
 };
-
 
 int bench_get_rank_worst(int argc, char **argv)
 {
@@ -140,6 +220,9 @@ static const ACTION_TABLE ACTIONS[] = {
     { "get_rank", bench_get_rank },
     { "get_rank_best", bench_get_rank_best },
     { "get_rank_worst", bench_get_rank_worst },
+    { "get_rank_top", bench_get_rank_top },
+    { "get_rank_last", bench_get_rank_last },
+    { "get_rank_not_found", bench_get_rank_not_found },
     { "help", do_help_commands },
 };
 
