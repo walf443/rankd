@@ -33,7 +33,7 @@ namespace rankd {
 rankd::Manager* prepare(unsigned long num)
 {
     rankd::Manager *manager = new Manager();
-    for (unsigned long i = 1; i <= num; i++ ) {
+    for (unsigned long i = num; i > 0; i-- ) {
         manager->top(i);
     }
     return manager;
@@ -114,7 +114,6 @@ int bench_get_rank_worst(int argc, char **argv)
     while ( n < num ) {
         n *= 2;
     }
-    std::cout << n << std::endl;
     for (unsigned long i = 1; i <= num; i++ ) {
         manager->get_rank(n/2-1);
     }
