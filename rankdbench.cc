@@ -211,7 +211,7 @@ int bench_get_rank_worst(int argc, char **argv)
 
 typedef struct {
         const char *name;
-            int (*func)(int argc, char** argv);
+        int (*func)(int argc, char** argv);
 } ACTION_TABLE;
 
 int do_help_commands(int argc, char** argv);
