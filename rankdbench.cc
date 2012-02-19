@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sys/time.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 using namespace rankd;
 
@@ -289,6 +290,31 @@ int bench_top_no_dup(int argc, char **argv)
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
 }
 
+int bench_top_rand(int argc, char **argv)
+{
+    if ( argc < 3 ) {
+        std::cout << "USAGE: " << argv[0] << " " << argv[1] << " num" << std::endl;
+        return 1;
+    }
+
+    unsigned long num = atol(argv[2]);
+
+    srandomdev();
+    Manager* manager = new Manager();
+    Timer *timer = new Timer;
+    timer->start();
+    for (unsigned long i = num; i > 0; i-- ) {
+        unsigned long item_id = random() % num;
+        std::cout << item_id << std::endl;
+        manager->top(item_id);
+    }
+    timer->stop();
+    unsigned long runtime = timer->get_result();
+    std::cout << "num:\t\t" << num << std::endl;
+    std::cout << "finished:\t" << runtime << "ms" << std::endl;
+    std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+}
+
 typedef struct {
         const char *name;
         int (*func)(int argc, char** argv);
@@ -304,6 +330,7 @@ static const ACTION_TABLE ACTIONS[] = {
     { "get_rank_last", bench_get_rank_last },
     { "get_rank_not_found", bench_get_rank_not_found },
     { "top_no_dup", bench_top_no_dup },
+    { "top_rand", bench_top_rand },
     { "help", do_help_commands },
 };
 
