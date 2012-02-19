@@ -8,4 +8,5 @@ env = Environment(
     CXXFLAGS = ['-std=c++0x']
 )
 env.Program(['rankdbench.cc', 'rankd.cc'])
+env.Program(['test_rankd.cc', 'rankd.cc'])
 
