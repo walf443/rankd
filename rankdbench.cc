@@ -118,10 +118,6 @@ int bench_get_rank (int argc, char **argv)
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
 
-    char buffer[BUFSIZ];
-    get_memory_size(buffer);
-    std::cout << "Memory Usage: " << buffer << std::endl;
-
     delete timer;
     delete manager;
 
