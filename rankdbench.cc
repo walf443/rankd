@@ -267,6 +267,28 @@ int bench_get_rank_worst(int argc, char **argv)
     return 0;
 };
 
+int bench_top_no_dup(int argc, char **argv)
+{
+    if ( argc < 3 ) {
+        std::cout << "USAGE: " << argv[0] << " " << argv[1] << " num" << std::endl;
+        return 1;
+    }
+
+    unsigned long num = atol(argv[2]);
+
+    Manager* manager = new Manager();
+    Timer *timer = new Timer;
+    timer->start();
+    for (unsigned long i = num; i > 0; i-- ) {
+        manager->top(i);
+    }
+    timer->stop();
+    unsigned long runtime = timer->get_result();
+    std::cout << "num:\t\t" << num << std::endl;
+    std::cout << "finished:\t" << runtime << "ms" << std::endl;
+    std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+}
+
 typedef struct {
         const char *name;
         int (*func)(int argc, char** argv);
@@ -281,6 +303,7 @@ static const ACTION_TABLE ACTIONS[] = {
     { "get_rank_top", bench_get_rank_top },
     { "get_rank_last", bench_get_rank_last },
     { "get_rank_not_found", bench_get_rank_not_found },
+    { "top_no_dup", bench_top_no_dup },
     { "help", do_help_commands },
 };
 
