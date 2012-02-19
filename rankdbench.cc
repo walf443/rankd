@@ -32,7 +32,7 @@ namespace rankd {
     }
 }
 
-void get_memory_size(char *memsiz){
+void get_memory_usage(char *memusage){
     pid_t pid = getpid();
     FILE *fh = popen("ps aux", "r");
     char buffer[BUFSIZ];
@@ -63,7 +63,7 @@ void get_memory_size(char *memsiz){
                             if ( colnum == 5 ) {
                                 int k = 0;
                                 while ( colbuf[k] != '\0' ) {
-                                    memsiz[k] = colbuf[k];
+                                    memusage[k] = colbuf[k];
                                     k++;
                                 }
                                 pclose(fh);
@@ -93,7 +93,7 @@ rankd::Manager* prepare(unsigned long num)
         manager->top(i);
     }
     char buffer[BUFSIZ];
-    get_memory_size(buffer);
+    get_memory_usage(buffer);
     std::cout << "Memory Usage: " << buffer << std::endl;
     return manager;
 }
