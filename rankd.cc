@@ -56,17 +56,18 @@ namespace rankd {
     // TODO: どこのデータからupdateされたのか、を考慮してより効率よく更新する
     void Manager::update_rank_map(Node* node)
     {
-        Node* nd = this->first;
+        Node* nd = this->first->next;
         unsigned long rank = 1;
-        unsigned long n = 1;
+        unsigned long n = 2;
 
         while ( n <= this->num_of_items ) {
             RD_Map<unsigned long, Node*>::iterator iter = this->rank_map.find(n);
             if ( iter != this->rank_map.end() ) {
                 // topから呼ばれているのを想定している
                 //
-                // データをひとつズラす
+                // ノードのあった位置よりも前の場合は、データをひとつズラす
                 Node* nd = (Node *)iter->second->prev;
+                std::cout << " rank " << n << ": " << nd->value << std::endl;
                 this->rank_map[n] = nd;
             } else {
                 // rank_mapにデータがない場合なので、基本的にはそれ以上上位のランキングは存在するはずなので、
