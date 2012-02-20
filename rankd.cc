@@ -4,6 +4,7 @@
 namespace rankd {
     Manager::Manager()
     {
+        this->num_of_items = 0;
         this->last = new Node();
         this->first = this->last;
     }
