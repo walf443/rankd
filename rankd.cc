@@ -33,6 +33,9 @@ namespace rankd {
         } else {
             Node *node, *prev, *next;
             node = iter->second;
+            if ( node == this->first ) {
+                return node;
+            }
             prev = node->prev;
             next = node->next;
             
