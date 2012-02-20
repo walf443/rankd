@@ -32,60 +32,6 @@ namespace rankd {
     }
 }
 
-void get_memory_usage(char *memusage){
-    pid_t pid = getpid();
-    FILE *fh = popen("ps aux", "r");
-    char buffer[BUFSIZ];
-    char colbuf[BUFSIZ];
-    if ( fh == NULL ) {
-        perror("popen");
-        exit(1);
-    } else {
-        while ( fgets(buffer, BUFSIZ, fh) != NULL ) {
-            unsigned int i = 0, j = 0;
-            bool in_space = false;
-            bool is_target_pid_line = false;
-            unsigned int colnum = 0;
-            memset(colbuf, '\0', BUFSIZ);
-            while ( buffer[i] != '\0' ) {
-                if ( buffer[i] == ' ' or buffer[i] == '\t' ) {
-                    in_space = true;
-                } else {
-                    if ( in_space ) {
-                        if ( colnum == 1 ) {
-                            // match pid.
-                            if ( pid == atoi(colbuf) ) {
-                                is_target_pid_line = true;
-                            }
-                        }
-                        if ( is_target_pid_line ) {
-                            // It's target Rss size.
-                            if ( colnum == 5 ) {
-                                int k = 0;
-                                while ( colbuf[k] != '\0' ) {
-                                    memusage[k] = colbuf[k];
-                                    k++;
-                                }
-                                pclose(fh);
-                                return;
-                            }
-                        }
-                        colnum++;
-                        j = 0;
-                        memset(colbuf, '\0', BUFSIZ);
-                        in_space = false;
-                    }
-                    colbuf[j] = buffer[i];
-                    j++;
-                }
-
-                i++;
-            }
-        }
-    }
-    pclose(fh);
-}
-
 rankd::Manager* prepare(unsigned long num)
 {
     rankd::Manager *manager = new Manager();
@@ -93,8 +39,9 @@ rankd::Manager* prepare(unsigned long num)
         manager->top(i);
     }
     char buffer[BUFSIZ];
-    get_memory_usage(buffer);
-    std::cout << "Memory Usage: " << buffer << std::endl;
+    struct rusage ru;
+    getrusage(RUSAGE_SELF, &ru);
+    std::cout << "Memory Usage: " << ru.ru_maxrss << std::endl;
     return manager;
 }
 
