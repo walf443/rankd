@@ -26,6 +26,8 @@ void top_test2()
     ok(manager->top(82) != NULL, "top ok");
     is(manager->get_rank(82), (unsigned long)1, "82 should be rank 1");
     is(manager->get_rank(1), (unsigned long)2, "1 should be rank 2");
+    is(manager->get_node_by_rank(1)->value, (unsigned long)82, "rank 1 should be 82");
+    is(manager->get_node_by_rank(2)->value, (unsigned long)1, "rank 2 should be 1");
 
     ok(manager->top(2)  != NULL, "top ok");
     ok(manager->top(3)  != NULL, "top ok");

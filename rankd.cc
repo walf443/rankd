@@ -46,6 +46,7 @@ namespace rankd {
             node->prev = NULL;
             node->next = this->first;
             this->first->prev = node;
+            this->first = node;
             this->update_rank_map(node);
 
             return node;
