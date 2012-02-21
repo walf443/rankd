@@ -299,6 +299,38 @@ int bench_get_node_by_rank(int argc, char **argv)
     return 0;
 }
 
+int bench_get_node_by_rank_best(int argc, char **argv)
+{
+    if ( argc < 3 ) {
+        std::cout << "USAGE: " << argv[0] << " " << argv[1] << " num" << std::endl;
+        return 1;
+    }
+    unsigned long num = atol(argv[2]);
+    Manager* manager = prepare(num);
+
+    Timer* timer = new Timer();
+    unsigned long n = 1;
+
+    while ( n < num ) {
+        n *= 2;
+    }
+
+    timer->start();
+    for (unsigned long i = num; i > 0; i-- ) {
+        manager->get_node_by_rank(n/2);
+    }
+    timer->stop();
+
+    unsigned long runtime = timer->get_result();
+    std::cout << "num:\t\t" << num << std::endl;
+    std::cout << "finished:\t" << runtime << "ms" << std::endl;
+    std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+
+    delete manager;
+
+    return 0;
+}
+
 typedef struct {
         const char *name;
         int (*func)(int argc, char** argv);
@@ -316,6 +348,7 @@ static const ACTION_TABLE ACTIONS[] = {
     { "top_no_dup", bench_top_no_dup },
     { "top_rand", bench_top_rand },
     { "get_node_by_rank", bench_get_node_by_rank },
+    { "get_node_by_rank_best", bench_get_node_by_rank_best },
     { "help", do_help_commands },
 };
 
