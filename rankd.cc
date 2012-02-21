@@ -157,8 +157,6 @@ namespace rankd {
 
                     counter--;
                 } while ( node = node->prev );
-                while ( counter == rank ) {
-                }
             }
 
             prev_indexed_rank = iter->first;
