@@ -1,5 +1,6 @@
 #include "rankd.hpp"
 #include <iostream>
+#include <assert.h>
 
 namespace rankd {
     Manager::Manager()
@@ -67,6 +68,7 @@ namespace rankd {
                 //
                 // ノードのあった位置よりも前の場合は、データをひとつズラす
                 Node* nd = (Node *)iter->second->prev;
+                assert(nd);
                 std::cout << " rank " << n << ": " << nd->value << std::endl;
                 this->rank_map[n] = nd;
             } else {
