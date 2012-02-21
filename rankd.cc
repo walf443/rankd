@@ -44,11 +44,13 @@ namespace rankd {
             prev->next = next;
             next->prev = prev;
 
-            node->prev = NULL;
             node->next = this->first;
             this->first->prev = node;
             this->first = node;
+
+            // rank_mapを更新した後に前へたどれないように切り離すべし
             this->update_rank_map(node);
+            node->prev = NULL;
 
             return node;
         }
