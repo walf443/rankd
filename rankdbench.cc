@@ -235,7 +235,14 @@ int bench_top_no_dup(int argc, char **argv)
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+
+    delete timer;
+    delete manager;
+
+    return 0;
 }
+
+
 
 int bench_top_rand(int argc, char **argv)
 {
@@ -259,6 +266,37 @@ int bench_top_rand(int argc, char **argv)
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+
+    delete timer;
+    delete manager;
+
+    return 0;
+}
+
+int bench_get_node_by_rank(int argc, char **argv)
+{
+    if ( argc < 3 ) {
+        std::cout << "USAGE: " << argv[0] << " " << argv[1] << " num" << std::endl;
+        return 1;
+    }
+    unsigned long num = atol(argv[2]);
+    Manager* manager = prepare(num);
+
+    Timer* timer = new Timer();
+    timer->start();
+    for (unsigned long i = num; i > 0; i-- ) {
+        manager->get_node_by_rank(i);
+    }
+    timer->stop();
+
+    unsigned long runtime = timer->get_result();
+    std::cout << "num:\t\t" << num << std::endl;
+    std::cout << "finished:\t" << runtime << "ms" << std::endl;
+    std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+
+    delete manager;
+
+    return 0;
 }
 
 typedef struct {
@@ -277,6 +315,7 @@ static const ACTION_TABLE ACTIONS[] = {
     { "get_rank_not_found", bench_get_rank_not_found },
     { "top_no_dup", bench_top_no_dup },
     { "top_rand", bench_top_rand },
+    { "get_node_by_rank", bench_get_node_by_rank },
     { "help", do_help_commands },
 };
 
