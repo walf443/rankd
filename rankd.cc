@@ -71,7 +71,6 @@ namespace rankd {
                 // ノードのあった位置よりも前の場合は、データをひとつズラす
                 Node* nd = (Node *)iter->second->prev;
                 assert(nd);
-                std::cout << " rank " << n << ": " << nd->value << std::endl;
                 this->rank_map[n] = nd;
             } else {
                 // rank_mapにデータがない場合なので、基本的にはそれ以上上位のランキングは存在するはずなので、
@@ -155,7 +154,7 @@ namespace rankd {
                     if ( counter == rank ) {
                         return node;
                     }
-                    
+
                     counter--;
                 } while ( node = node->prev );
                 while ( counter == rank ) {

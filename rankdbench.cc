@@ -252,7 +252,6 @@ int bench_top_rand(int argc, char **argv)
     timer->start();
     for (unsigned long i = num; i > 0; i-- ) {
         unsigned long item_id = random() % num;
-        std::cout << item_id << std::endl;
         manager->top(item_id);
     }
     timer->stop();
