@@ -65,6 +65,7 @@ int bench_get_rank (int argc, char **argv)
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+    std::cout << "qps:\t\t" << 1.0 * num / runtime * 1000 << "qps" << std::endl;
 
     delete timer;
     delete manager;
@@ -92,6 +93,7 @@ int bench_get_rank_top(int argc, char **argv)
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+    std::cout << "qps:\t\t" << 1.0 * num / runtime * 1000 << "qps" << std::endl;
 
     delete timer;
     delete manager;
@@ -119,6 +121,7 @@ int bench_get_rank_last(int argc, char **argv)
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+    std::cout << "qps:\t\t" << 1.0 * num / runtime * 1000 << "qps" << std::endl;
 
     delete timer;
     delete manager;
@@ -146,6 +149,7 @@ int bench_get_rank_not_found(int argc, char **argv)
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+    std::cout << "qps:\t\t" << 1.0 * num / runtime * 1000 << "qps" << std::endl;
 
     delete timer;
     delete manager;
@@ -177,6 +181,7 @@ int bench_get_rank_best(int argc, char **argv)
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+    std::cout << "qps:\t\t" << 1.0 * num / runtime * 1000 << "qps" << std::endl;
 
     delete timer;
     delete manager;
@@ -208,6 +213,7 @@ int bench_get_rank_worst(int argc, char **argv)
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+    std::cout << "qps:\t\t" << 1.0 * num / runtime * 1000 << "qps" << std::endl;
 
     delete timer;
     delete manager;
@@ -235,6 +241,7 @@ int bench_top_no_dup(int argc, char **argv)
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+    std::cout << "qps:\t\t" << 1.0 * num / runtime * 1000 << "qps" << std::endl;
 
     delete timer;
     delete manager;
@@ -266,6 +273,7 @@ int bench_top_rand(int argc, char **argv)
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+    std::cout << "qps:\t\t" << 1.0 * num / runtime * 1000 << "qps" << std::endl;
 
     delete timer;
     delete manager;
@@ -293,6 +301,7 @@ int bench_get_node_by_rank(int argc, char **argv)
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+    std::cout << "qps:\t\t" << 1.0 * num / runtime * 1000 << "qps" << std::endl;
 
     delete manager;
 
@@ -325,6 +334,7 @@ int bench_get_node_by_rank_best(int argc, char **argv)
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+    std::cout << "qps:\t\t" << 1.0 * num / runtime * 1000 << "qps" << std::endl;
 
     delete timer;
     delete manager;
@@ -358,6 +368,7 @@ int bench_get_node_by_rank_worst(int argc, char **argv)
     std::cout << "num:\t\t" << num << std::endl;
     std::cout << "finished:\t" << runtime << "ms" << std::endl;
     std::cout << "average:\t" << 1.0 * runtime / num << "ms" << std::endl;
+    std::cout << "qps:\t\t" << 1.0 * num / runtime * 1000 << "qps" << std::endl;
 
     delete timer;
     delete manager;
